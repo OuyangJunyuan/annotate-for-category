@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: annotate
+Description: Description of annotate
+Version: 1.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: geometry_msgs interactive_markers pcl_conversions pcl_ros roscpp rviz tf visualization_msgs

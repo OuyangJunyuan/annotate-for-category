@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ou/workspace/ros_ws/ironworks_ws/src/tools/annotate/cmake-build-debug/devel/setup.sh
