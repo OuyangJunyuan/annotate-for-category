@@ -1,25 +1,3 @@
-
-
-# For classification
-
-欧阳俊源-oyjy：标注配置文件 annotate.yaml
-
-```yaml
-labels:
-  - car: 0
-  - ironpile: 0
-  - other: 0
-  - pedestrian: 0
-  - tree: 0
-dataset_root: /home/ou/Documents/dataset/my_dataset
-tags:
-  - test: 0
-  - train: 0
-  - val: 0
-```
-
-然后操作和原版一致
-
 # annotate
 
 ![GitHub](https://img.shields.io/github/license/Earthwings/annotate)
@@ -67,10 +45,3 @@ The above call will run ```rosbag play``` and RViz using a configuration file th
 ![RViz/Annotate screenshot](docs/rviz-full.png "RViz screenshot with annotate")
 
 Please see [labeling](docs/labeling.md) for a detailed description of label creation.
-
----
-
-
-
-
-

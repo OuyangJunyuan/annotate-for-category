@@ -121,17 +121,20 @@
   <component name="ChangeListManager">
     <list default="true" id="dd326796-0bc9-480a-b9e6-3e323419aade" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/example.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/example.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/spawn_model.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/spawn_model.launch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/rviz/example.rviz" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/rviz/example.rviz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/RS-Ruby80.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/RS-Ruby80.urdf.xacro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/example.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/example.urdf.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/include/velodyne_gazebo_plugins/GazeboRosCustomLidar.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/include/velodyne_gazebo_plugins/GazeboRosCustomLidar.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/src/GazeboRosCustomLidar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/src/GazeboRosCustomLidar.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/src/GazeboRosVelodyneLaser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/src/GazeboRosVelodyneLaser.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_description/urdf/excavator.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_description/urdf/excavator.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/annodate.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/annodate.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/annotate/annotate_display.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/annotate/annotate_display.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/annotate/annotation_marker.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/annotate/annotation_marker.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/annotate_display.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/annotate_display.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/annotation_marker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/annotation_marker.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../my_annotate/annotate_data/annodate.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/annotate_data/annodate.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my_annotate/launch/example.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/launch/example.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my_annotate/models/example.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/models/example.urdf.xacro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +162,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
-  <component name="RunManager" selected="CMake Application.actionlib_generate_messages_cpp">
+  <component name="RunManager" selected="CMake Application.annotate">
     <configuration name="actionlib_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="annotate" TARGET_NAME="actionlib_generate_messages_cpp" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -832,7 +835,10 @@
       <workItem from="1611207983373" duration="773000" />
       <workItem from="1611212864036" duration="820000" />
       <workItem from="1611213697917" duration="15574000" />
-      <workItem from="1611285566359" duration="21737000" />
+      <workItem from="1611285566359" duration="25017000" />
+      <workItem from="1611370907543" duration="5742000" />
+      <workItem from="1611376670809" duration="9549000" />
+      <workItem from="1611394608678" duration="6811000" />
     </task>
     <servers />
   </component>

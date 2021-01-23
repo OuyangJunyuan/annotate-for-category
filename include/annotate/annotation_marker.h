@@ -72,7 +72,13 @@ namespace annotate {
          */
         std::vector<std::string> getTags() { return tags_; };
 
-        std::string getLabel() { return label_;};
+        std::string getLabel() { return label_; };
+
+        void setLabelTag(std::string _label, std::string _tag) {
+            label_ = _label;
+            tags_.clear();
+            tags_.push_back(_tag);
+        }
 
     private:
         using MenuHandler = interactive_markers::MenuHandler;

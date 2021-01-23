@@ -312,6 +312,7 @@ namespace annotate {
         marker_.name = string("annotation_") + to_string(id_);
         createCubeControl();
         createMoveControl();
+
     }
 
     void AnnotationMarker::updateDescription(const PointContext &context) {
@@ -667,7 +668,7 @@ namespace annotate {
         /*
          *
          */
-        if (tags_.empty() && label_ == "unknown") {
+        if (tags_.empty() || label_ == "unknown") {
             qDebug() << "请选择Label和Tag" << endl;
             return;
         }
@@ -716,18 +717,18 @@ namespace annotate {
 
         //获取分类文件夹名
         QFile fp;
-        fp.setFileName(annotate_display_->category_file_path);
+        fp.setFileName(annotate_display_->category_file_path_);
         fp.open(QIODevice::ReadWrite | QIODevice::Text);
         stringstream ss(fp.readAll().toStdString());
         string label, cate_dir, type = tags_[0];
         for (auto pair:annotate_display_->num_labels_) {
             ss >> label >> cate_dir;
             if (label == label_) {
-                fp.close();
+                qDebug()<<label.c_str()<<endl;
                 break;
             }
         }
-
+        fp.close();
 
         //更新计数
         ++annotate_display_->num_labels_[label_];
@@ -824,19 +825,29 @@ namespace annotate {
             centralization.translation() << -centroid[0], -centroid[1], -centroid[2];
             pcl::transformPointCloud(*box_cloud, *box_cloud, centralization);
 
+            pcl::PointCloud<pcl::PointXYZ> cloud_pub;
             pcl::PointXYZ minPt, maxPt;
             pcl::getMinMax3D(*box_cloud, minPt, maxPt);
             stringstream ss_pts;
+
+            float max = maxPt.x > maxPt.y ? maxPt.x : maxPt.y;
+            max = max > maxPt.z ? max : maxPt.z;
             for (auto const &p : box_cloud->points) {
-                ss_pts << p.x / maxPt.x << " " << p.y / maxPt.y << " " << p.z / maxPt.z << endl;
+                pcl::PointXYZ nmlz_p(p.x / max, p.y / max, p.z / max);
+                cloud_pub.push_back(nmlz_p);
+                ss_pts << nmlz_p.x << " " << nmlz_p.y << " " << nmlz_p.z << endl;
             }
             WRITE_FILE(pts_file_path, ss_pts.str().c_str());
+            sensor_msgs::PointCloud2 msg_pub;
+            pcl::toROSMsg(cloud_pub, msg_pub);
+            msg_pub.header.frame_id = marker_.header.frame_id;
+            annotate_display_->cloud_in_box_publisher_.publish(msg_pub);
         }
 
 
 
         //创建 split 文件
-        QString split_file_path = annotate_display_->split_dir_path
+        QString split_file_path = annotate_display_->split_dir_path_
                                   + "/shuffled_" + type.c_str() + "_file_list.json";
 
 

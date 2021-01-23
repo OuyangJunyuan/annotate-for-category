@@ -9,6 +9,7 @@
 #include <rviz/properties/float_property.h>
 #include <rviz/properties/ros_topic_property.h>
 #include <rviz/properties/string_property.h>
+#include <rviz/properties/enum_property.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <tf/tf.h>
 #include <tf/transform_broadcaster.h>
@@ -131,6 +132,12 @@ namespace annotate {
 
         void updateRoot();
 
+        void updateShuffle();
+
+        void updateDefalutTag();
+
+        void updateDefalutLabel();
+
     private:
         enum PlaybackCommand {
             Play,
@@ -186,17 +193,26 @@ namespace annotate {
         rviz::FloatProperty *padding_property_{nullptr};
         rviz::FloatProperty *margin_property_{nullptr};
 
+
         //added by oyjy
     public:
         rviz::StringProperty *label_num_property_{nullptr};
         rviz::StringProperty *tag_num_property_{nullptr};
         rviz::StringProperty *root_property_{nullptr};
+        rviz::BoolProperty *unsort_property_{nullptr};
+        rviz::EnumProperty *defalutLabelProperty_{nullptr};
+        rviz::EnumProperty *defalutTagProperty_{nullptr};
 
         std::map<std::string, uint32_t> num_labels_;
         std::map<std::string, uint32_t> num_tags_;
         QString dataset_root_path_;
-        QString category_file_path;
-        QString split_dir_path;
+        QString category_file_path_;
+        QString split_dir_path_;
+
+        std::string defalut_label_;
+        std::string defalut_tag_;
+
+        ros::Publisher cloud_in_box_publisher_;
 
         void setCurrentCount(uint32_t _id) { current_marker_id_ = _id; };
     };
