@@ -59,7 +59,7 @@ def main(config_file_path):
         yaml.dump(datas, fs, default_flow_style=False)
 
 
-config_file_path = "/home/ou/workspace/ros_ws/ironworks_ws/src/tools/my_annotate/config/annodate.yaml"
+#config_file_path = "/home/ou/workspace/ros_ws/ironworks_ws/src/tools/my_annotate/config/annodate.yaml"
 main(config_file_path)
 # dataset_root: /home/ou/Documents/dataset/my_dataset
 # labels: {car: 206, ironpile: 149, pedestrian: 154, tree: 100}
