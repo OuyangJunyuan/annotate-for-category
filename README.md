@@ -1,3 +1,7 @@
+dependen
+
+ pip install PyYaml
+
 # annotate
 
 ![GitHub](https://img.shields.io/github/license/Earthwings/annotate)

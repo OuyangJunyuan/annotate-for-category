@@ -2,6 +2,7 @@
 
 #include "annotation_marker.h"
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
 #include <tf/tf.h>
@@ -14,6 +15,7 @@
 #include <tf/transform_listener.h>
 #include <QTime>
 #include <limits>
+
 
 namespace annotate {
     void setRotation(geometry_msgs::Quaternion &quaternion, double x, double y, double z);
@@ -174,6 +176,9 @@ namespace annotate {
 
         void autoFit(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
+        //新增
+        void genSplitandShuffle(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
+
         void pull();
 
         void push();
@@ -216,6 +221,8 @@ namespace annotate {
         bool ignore_ground_{false};
         double padding_{0.05};
         double margin_{0.25};
+
+
     };
 
 }  // namespace annotate

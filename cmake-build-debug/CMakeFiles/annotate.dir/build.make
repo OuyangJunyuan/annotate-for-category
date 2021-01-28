@@ -408,7 +408,34 @@ devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
 devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libpthread.so
 devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libpython2.7.so
 devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.9.5
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_program_options.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/librosconsole_bridge.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libtf.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libtf2_ros.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libactionlib.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libmessage_filters.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libroscpp.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libxmlrpcpp.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libtf2.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/librosconsole.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/librosconsole_log4cxx.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/librosconsole_backend_interface.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/liblog4cxx.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libroscpp_serialization.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/librostime.so
+devel/lib/libannotate.so: /opt/ros/melodic/lib/libcpp_common.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_system.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libpthread.so
+devel/lib/libannotate.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
 devel/lib/libannotate.so: CMakeFiles/annotate.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ou/workspace/ros_ws/ironworks_ws/src/tools/annotate/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX shared library devel/lib/libannotate.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/annotate.dir/link.txt --verbose=$(VERBOSE)

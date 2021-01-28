@@ -7,8 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(CMAKE_BUILD_TYPE Debug)
 
-## Find catkin macros and libraries
 
+## Find catkin macros and libraries
+# for python3
+#list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/module )
+#find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+# for python2
+find_package(PythonLibs 2.7 REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
 geometry_msgs
 interactive_markers
@@ -44,6 +49,7 @@ include_directories(
 include
 ${catkin_INCLUDE_DIRS}
 ${rviz_INCLUDE_DIRS}
+        ${PYTHON_INCLUDE_DIRS}
 )
 
 set(CMAKE_AUTOMOC ON)
@@ -66,8 +72,10 @@ include/${PROJECT_NAME}/${PROJECT_NAME}_tool.h
 include/${PROJECT_NAME}/file_dialog_property.h
 include/${PROJECT_NAME}/shortcut_property.h
 )
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES} yaml-cpp)
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES} ${PYTHON_LIBRARIES} yaml-cpp)
 
+add_executable(gensplit src/fix_split_file.cpp)
+target_link_libraries(gensplit yaml-cpp ${QT_LIBRARIES})
 #############
 ## Install ##
 #############

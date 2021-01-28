@@ -1,11 +1,11 @@
 tags:
-  - test: 2
-  - train: 8
-  - val: 2
-dataset_root: /home/ou/Documents/dataset/my_dataset
+  - test: 0
+  - train: 4
+  - val: 0
 labels:
   - car: 0
-  - ironpile: 4
-  - other: 2
-  - pedestrian: 6
+  - ironpile: 0
+  - other: 0
+  - pedestrian: 4
   - tree: 0
+dataset_root: /home/ou/Documents/dataset/my_dataset

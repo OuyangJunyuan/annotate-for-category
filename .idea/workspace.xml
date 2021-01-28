@@ -46,6 +46,7 @@
       <config projectName="annotate" targetName="nav_msgs_generate_messages_cpp" />
       <config projectName="annotate" targetName="visualization_msgs_generate_messages_eus" />
       <config projectName="annotate" targetName="annotate" />
+      <config projectName="annotate" targetName="gensplit_autogen" />
       <config projectName="annotate" targetName="tf2_msgs_generate_messages_nodejs" />
       <config projectName="annotate" targetName="std_srvs_generate_messages_nodejs" />
       <config projectName="annotate" targetName="actionlib_msgs_generate_messages_lisp" />
@@ -78,6 +79,7 @@
       <config projectName="annotate" targetName="nav_msgs_generate_messages_lisp" />
       <config projectName="annotate" targetName="actionlib_msgs_generate_messages_nodejs" />
       <config projectName="annotate" targetName="visualization_msgs_generate_messages_cpp" />
+      <config projectName="annotate" targetName="gensplit" />
       <config projectName="annotate" targetName="nodelet_topic_tools_gencfg" />
       <config projectName="annotate" targetName="actionlib_msgs_generate_messages_py" />
       <config projectName="annotate" targetName="map_msgs_generate_messages_eus" />
@@ -107,34 +109,45 @@
       <config projectName="annotate" targetName="std_msgs_generate_messages_lisp" />
       <config projectName="annotate" targetName="doxygen" />
       <config projectName="annotate" targetName="download_extra_data" />
-      <config projectName="annotate" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="annotate" targetName="bond_generate_messages_eus" />
+      <config projectName="annotate" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="annotate" targetName="sensor_msgs_generate_messages_eus" />
       <config projectName="annotate" targetName="std_msgs_generate_messages_cpp" />
     </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd326796-0bc9-480a-b9e6-3e323419aade" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/scripts/generateSplitFile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fix_split_file.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/example.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/example.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/spawn_model.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/launch/spawn_model.launch" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/rviz/example.rviz" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/rviz/example.rviz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/RS-Ruby80.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/RS-Ruby80.urdf.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/VLP-16.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/VLP-16.urdf.xacro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/example.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_description/urdf/example.urdf.xacro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/include/velodyne_gazebo_plugins/GazeboRosCustomLidar.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/include/velodyne_gazebo_plugins/GazeboRosCustomLidar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/src/GazeboRosCustomLidar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/src/GazeboRosCustomLidar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/lidar_simulation/velodyne_simulator/velodyne_gazebo_plugins/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_description/urdf/excavator.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_description/urdf/excavator.xacro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/annodate.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/annodate.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/config/display.rviz" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/config/display.rviz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/config/joint_names_excavator.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/config/joint_names_excavator.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/launch/gazebo_models.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/launch/gazebo_models.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/models/ironworks_map/media/map_elevation.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/models/ironworks_map/media/map_elevation.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/models/stone1/model.sdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/models/stone1/model.sdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/src/generate_map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/src/generate_map.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/world/ironworks_map.world" beforeDir="false" afterPath="$PROJECT_DIR$/../../gazebo_simulation/robot_simulation/robot_gazebo/world/ironworks_map.world" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../pointcloud_process/config/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../pointcloud_process/config/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/annotate/annotate_display.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/annotate/annotate_display.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/annotate/annotation_marker.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/annotate/annotation_marker.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/annotate_display.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/annotate_display.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/annotation_marker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/annotation_marker.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../my_annotate/launch/example.launch" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/launch/example.launch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my_annotate/config/display.rviz" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/config/display.rviz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../my_annotate/models/example.urdf.xacro" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/models/example.urdf.xacro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../my_annotate/world/annotate.world" beforeDir="false" afterPath="$PROJECT_DIR$/../my_annotate/world/annotate.world" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +157,13 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
@@ -159,10 +178,15 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CMakeLists.txt" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts/generateSplitFile.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="CMake Application.annotate">
+  <component name="RunManager" selected="Python.generateSplitFile">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="actionlib_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="annotate" TARGET_NAME="actionlib_generate_messages_cpp" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -289,6 +313,16 @@
       </method>
     </configuration>
     <configuration name="dynamic_reconfigure_generate_messages_py" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="annotate" TARGET_NAME="dynamic_reconfigure_generate_messages_py" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gensplit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="annotate" TARGET_NAME="gensplit" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="annotate" RUN_TARGET_NAME="gensplit">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gensplit_autogen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="annotate" TARGET_NAME="gensplit_autogen" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -708,6 +742,53 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="annotate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/software/anaconda3/envs/dl/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/generateSplitFile.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="generateSplitFile" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="annotate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/software/anaconda3/envs/dl/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/generateSplitFile.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="CMake Application.actionlib_generate_messages_cpp" />
       <item itemvalue="CMake Application.actionlib_generate_messages_eus" />
@@ -735,6 +816,8 @@
       <item itemvalue="CMake Application.dynamic_reconfigure_generate_messages_lisp" />
       <item itemvalue="CMake Application.dynamic_reconfigure_generate_messages_nodejs" />
       <item itemvalue="CMake Application.dynamic_reconfigure_generate_messages_py" />
+      <item itemvalue="CMake Application.gensplit" />
+      <item itemvalue="CMake Application.gensplit_autogen" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_cpp" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_eus" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_lisp" />
@@ -818,6 +901,7 @@
       <item itemvalue="CMake Application.gmock_main" />
       <item itemvalue="CMake Application.gtest" />
       <item itemvalue="CMake Application.gtest_main" />
+      <item itemvalue="Python.generateSplitFile" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -839,6 +923,12 @@
       <workItem from="1611370907543" duration="5742000" />
       <workItem from="1611376670809" duration="9549000" />
       <workItem from="1611394608678" duration="6811000" />
+      <workItem from="1611461356307" duration="5525000" />
+      <workItem from="1611481426716" duration="2353000" />
+      <workItem from="1611484118053" duration="3488000" />
+      <workItem from="1611633333890" duration="11410000" />
+      <workItem from="1611717262247" duration="29329000" />
+      <workItem from="1611802334776" duration="15517000" />
     </task>
     <servers />
   </component>

@@ -22,10 +22,12 @@
 #include <QDir>
 #include <QDebug>
 
+
 using namespace visualization_msgs;
 using namespace interactive_markers;
 using namespace tf;
 using namespace std;
+
 
 namespace annotate {
     namespace internal {
@@ -88,20 +90,19 @@ namespace annotate {
 
     void AnnotateDisplay::createNewAnnotation(const geometry_msgs::PointStamped::ConstPtr &message) {
         Transform transform;
-        transform.setOrigin({message->point.x, message->point.y, message->point.z});
+        /*
+         *
+         */
+        transform.setOrigin({message->point.x, message->point.y, defaultBoxSize.z / 2});
+//        transform.setOrigin({message->point.x, message->point.y, message->point.z});
+        /*
+         *
+         */
         TrackInstance instance;
         instance.center = StampedTransform(transform, time_, message->header.frame_id, "current_annotation");
-        /*
-        *
-        */
-        instance.label = defalut_label_;
-        instance.tags.push_back(defalut_tag_);
-        /*
-        *
-        */
-        instance.box_size.setValue(1.0, 1.0, 1.0);
-        if (defalut_label_ != "unknown") {
-            current_marker_id_ = num_labels_[defalut_label_] + 1;//取代原本++current_marker_id_
+
+        if (default_label_ != "unknown") {
+            current_marker_id_ = num_labels_[default_label_] + 1;//取代原本++current_marker_id_
         } else {
             ++current_marker_id_;
         }
@@ -109,7 +110,7 @@ namespace annotate {
         /*
          *
          */
-        marker->setLabelTag(instance.label, instance.tags[0]);
+        marker->setLabelTag(default_label_, default_tag_);
         /*
          *
          */
@@ -140,6 +141,17 @@ namespace annotate {
         new_annotation_subscriber_ =
                 node_handle_.subscribe("/new_annotation", 10, &AnnotateDisplay::createNewAnnotation, this);
         cloud_in_box_publisher_ = node_handle_.advertise<sensor_msgs::PointCloud2>("cloud_in_box", 1);
+
+        //added by oyjy
+        Py_Initialize();//使用python之前，要调用Py_Initialize();这个函数进行初始化 解释器与基本模块
+        PyRun_SimpleString("import sys\n"
+                           "\n"
+                           "print('AnnotateDisplay use :',sys.version)");
+    }
+
+    AnnotateDisplay::~AnnotateDisplay() {
+        Py_Finalize();
+        cout << "Py_Finalize" << endl;
     }
 
     template<class T>
@@ -265,6 +277,7 @@ namespace annotate {
     }
 
     void AnnotateDisplay::onInitialize() {
+
         cloud_display_ = createDisplay("rviz/PointCloud2");
         addDisplay(cloud_display_);
         cloud_display_->initialize(context_);
@@ -293,68 +306,60 @@ namespace annotate {
         open_file_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/open.svg")));
         open_file_property_->setMode(FileDialogProperty::OpenFileName);
 
+        // 设置
         auto *settings = new rviz::Property("Settings", QVariant(), "Configure annotation properties", this);
         topic_property_ = new rviz::RosTopicProperty("Topic", QString(), "sensor_msgs/PointCloud2",
                                                      "Point cloud to annotate",
                                                      settings, SLOT(updateTopic()), this);
-        annotation_file_property_ = new FileDialogProperty("Annotation File", "annotate.yaml",
+
+        // 设置 - 文件
+        auto *file_settings = new rviz::Property("Files", QVariant(),
+                                                 "annotation files.", settings);
+        file_settings->setIcon(rviz::loadPixmap(QString("package://annotate/icons/save.svg")));
+        annotation_file_property_ = new FileDialogProperty("Save File", "annotate.yaml",
                                                            "Annotation storage file",
-                                                           settings, SLOT(updateAnnotationFile()), this);
+                                                           file_settings, SLOT(updateAnnotationFile()), this);
         annotation_file_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/save.svg")));
         annotation_file_property_->setMode(FileDialogProperty::SaveFileName);
-        /*
-         *
-         */
+
         root_property_ = new rviz::StringProperty("Dataset Root", "",
                                                   "root path of dataset",
-                                                  settings, SLOT(updateRoot()), this);
+                                                  file_settings, SLOT(updateRoot()), this);
         root_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/save.svg")));
-        /*
-         *
-         */
+
+        // 设置 - label
         labels_property_ = new rviz::StringProperty("Labels", "object, unknown",
                                                     "Available labels (separated by comma)",
                                                     settings, SLOT(updateLabels()), this);
         labels_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/labels.svg")));
 
-        /*
-         * added by oyjy
-         */
-        defalut_label_ = "unknown";
-        defalut_tag_ = "unknown";
-
-        defalutLabelProperty_ = new rviz::EnumProperty("Defalut Label", "",
-                                                       "set defalut label value",
-                                                       settings, SLOT(updateDefalutLabel()), this);
-        defalutLabelProperty_->addOptionStd(defalut_label_, 0);
-        label_num_property_ = new rviz::StringProperty("L_num", "",
-                                                       "last name_id of each category",
-                                                       settings, SLOT(updateLabelNum()), this);
-        label_num_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/labels.svg")));
-
-        /*
-         *
-         */
-        tags_property_ = new rviz::StringProperty("Tags", "easy, moderate, hard", "Available tags (separated by comma)",
+        tags_property_ = new rviz::StringProperty("Tags", "easy, moderate, hard",
+                                                  "Available tags (separated by comma)",
                                                   settings, SLOT(updateTags()), this);
         tags_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/tags.svg")));
 
-        /*
-         *
-         */
-        defalutTagProperty_ = new rviz::EnumProperty("Defalut Tag", "",
+        // 设置 - 默认值
+        auto *default_settings = new rviz::Property("Default", QVariant(),
+                                                    "annotation files.", settings);
+        default_label_ = "unknown";
+        default_tag_ = "unknown";
+
+        defaultLabelProperty_ = new rviz::EnumProperty("Label", "",
+                                                       "set defalut label value",
+                                                       default_settings, SLOT(updateDefaultLabel()), this);
+        defaultLabelProperty_->addOptionStd(default_label_, 0);
+        defaultLabelProperty_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/labels.svg")));
+
+        defaultTagProperty_ = new rviz::EnumProperty("Tag", "",
                                                      "set defalut tag value",
-                                                     settings, SLOT(updateDefalutTag()), this);
-        defalutTagProperty_->addOptionStd(defalut_tag_, 0);
-        tag_num_property_ = new rviz::StringProperty("T_num", "",
-                                                     "last name_id of each category",
-                                                     settings, SLOT(updateTagNum()), this);
-        tag_num_property_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/tags.svg")));
+                                                     default_settings, SLOT(updateDefaultTag()), this);
+        defaultTagProperty_->addOptionStd(default_tag_, 0);
+        defaultTagProperty_->setIcon(rviz::loadPixmap(QString("package://annotate/icons/tags.svg")));
 
-
-
-
-
+        defaultBoxSizeProperty = new rviz::VectorProperty("Size", Ogre::Vector3(1, 1, 1),
+                                                          "default box size", default_settings,
+                                                          SLOT(updateDefaultSize()), this);
+        defaultBoxSizeProperty->setIcon(rviz::loadPixmap(QString("package://annotate/icons/auto-fit-points.svg")));
 
         /*
          *
@@ -378,12 +383,6 @@ namespace annotate {
                                                          "ground points that should not be included in annotations.",
                                                          settings, SLOT(updateIgnoreGround()), this);
 
-        /*
-         *
-         */
-        unsort_property_ = new rviz::BoolProperty("Shuffled File", false,
-                                                  "shuffled train/test/val file list",
-                                                  settings, SLOT(updateShuffle()), this);
         /*
          *
          */
@@ -445,6 +444,7 @@ namespace annotate {
 
         adjustView();
         expand();
+
     }
 
     QStringList AnnotateDisplay::toolShortcuts() const {
@@ -537,11 +537,13 @@ namespace annotate {
 //            marker->setLabels(labels_);
 //        }
 // 注释掉上面：关闭输入修改功能
-        string joined_label;
-        for (auto const &tag : labels_) {
-            joined_label += joined_label.empty() ? tag : ", " + tag;
+        string joined;
+        for (auto const &it : num_labels_) {
+            auto lbl = it.first;
+            auto num = it.second;
+            joined += joined.empty() ? lbl + "(" + to_string(num) + ")" : ", " + lbl + "(" + to_string(num) + ")";
         }
-        labels_property_->setStdString(joined_label);
+        labels_property_->setStdString(joined);
     }
 
     void AnnotateDisplay::updateTags() {
@@ -554,11 +556,13 @@ namespace annotate {
 //            marker->setTags(tags_);
 //        }
         //注释掉上面：关闭输入修改功能
-        string joined_label;
-        for (auto const &tag : tags_) {
-            joined_label += joined_label.empty() ? tag : ", " + tag;
+        string joined;
+        for (auto const &it : num_tags_) {
+            auto tag = it.first;
+            auto num = it.second;
+            joined += joined.empty() ? tag + "(" + to_string(num) + ")" : ", " + tag + "(" + to_string(num) + ")";
         }
-        tags_property_->setStdString(joined_label);
+        tags_property_->setStdString(joined);
     }
 
     void AnnotateDisplay::openFile() {
@@ -612,6 +616,7 @@ namespace annotate {
 
     bool AnnotateDisplay::load(string const &file) {
         qDebug() << "loading" << file.c_str() << endl;
+        config_file_path_ = file;
         using namespace YAML;
         Node node;
         try {
@@ -624,53 +629,50 @@ namespace annotate {
             setStatusStd(rviz::StatusProperty::Error, "Annotation File", stream.str());
             return false;
         }
-        labels_.clear();
-        num_labels_.clear();
+
         /*
          * added by oyjy
          */
+        labels_.clear();
+        num_labels_.clear();
+        defaultLabelProperty_->clearOptions();
         //获取当前进度与标签
         Node labels = node["labels"];
-        string joined_labels, joined_num;
-        for (size_t i = 0; i < labels.size(); ++i) {
-            auto it = labels[i].begin();
-            auto label_value = it->first.as<string>();
-            auto num_value = it->second.as<uint32_t>();
+        int i = 0;
+        for (auto it = labels.begin(); it != labels.end(); ++it) {
+            auto lbl = it->first.as<string>();
+            auto num = it->second.as<uint32_t>();
 
-            labels_.push_back(label_value);
-            num_labels_.insert(make_pair(label_value, num_value));
-
-            joined_labels += joined_labels.empty() ? label_value : ", " + label_value;
-            joined_num += joined_num.empty() ? to_string(num_value) : ", " + to_string(num_value);
+            labels_.push_back(lbl);
+            defaultLabelProperty_->addOptionStd(lbl, i++);
+            num_labels_.insert(make_pair(lbl, num));
         }
-        labels_property_->setStdString(joined_labels);
-        label_num_property_->setStdString(joined_num);
+
         //获取tag和数量
         tags_.clear();
         num_tags_.clear();
+        defaultTagProperty_->clearOptions();
         Node tags = node["tags"];
-        string joined_tags, joined_num_tags;
-        for (size_t i = 0; i < tags.size(); ++i) {
-            auto it = tags[i].begin();
-            auto label_value = it->first.as<string>();
-            auto num_value = it->second.as<uint32_t>();
+        i = 0;
+        for (auto it = tags.begin(); it != tags.end(); ++it) {
+            auto tag = it->first.as<string>();
+            auto num = it->second.as<uint32_t>();
 
-            tags_.push_back(label_value);
-            num_tags_.insert(make_pair(label_value, num_value));
-
-            joined_tags += joined_tags.empty() ? label_value : ", " + label_value;
-            joined_num_tags += joined_num_tags.empty() ? to_string(num_value) : ", " + to_string(num_value);
+            tags_.push_back(tag);
+            defaultTagProperty_->addOptionStd(tag, i++);
+            num_tags_.insert(make_pair(tag, num));
         }
-        tags_property_->setStdString(joined_tags);
-        tag_num_property_->setStdString(joined_num_tags);
 
-
+        //更新默认值
+        default_tag_ = tags_[0];
+        default_label_ = labels_[0];
+        defaultTagProperty_->setStringStd(default_tag_);
+        defaultLabelProperty_->setStringStd(default_label_);
 
         //获取本目录
         Node root = node["dataset_root"];
         auto const value = root.as<string>();
         dataset_root_path_ = QString(value.c_str());
-        root_property_->setStdString(value);
         MKDIR(dataset_root_path_);//创建目录
 
         //创建记录文本
@@ -685,22 +687,12 @@ namespace annotate {
         split_dir_path_ = dataset_root_path_ + "/" + "train_test_split";
         MKDIR(split_dir_path_);
 
-        defalutTagProperty_->clearOptions();
-        defalutLabelProperty_->clearOptions();
-        int i = 0;
-        for (auto const &it:tags_) {
-            defalutTagProperty_->addOptionStd(it, i++);
-        }
-        i = 0;
-        for (auto const &it:labels_) {
-            defalutLabelProperty_->addOptionStd(it, i++);
-        }
+        //更新rviz显示
+        updateAll();
 
         /*
          * added by oyjy
          */
-
-
         Node tracks = node["tracks"];
         size_t annotations = 0;
         for (size_t i = 0; i < tracks.size(); ++i) {
@@ -769,26 +761,18 @@ namespace annotate {
         size_t annotations = 0;
         if (!num_labels_.empty()) {
             for (auto const &pair : num_labels_) {
-                YAML::Node temp;
-                temp[pair.first] = pair.second;
-                node["labels"].push_back(temp);
+                node["labels"][pair.first] = pair.second;
             }
         }
-//        if (!tags_.empty()) {
-//            for (auto const &tag : tags_) {
-//                node["tags"].push_back(tag);
-//            }
-//        }
+
         if (!num_tags_.empty()) {
             for (auto const &pair : num_tags_) {
-                YAML::Node temp;
-                temp[pair.first] = pair.second;
-                node["tags"].push_back(temp);
+                node["tags"][pair.first] = pair.second;
             }
         }
-        if (!dataset_root_path_.toStdString().empty()) {
+        if (!dataset_root_path_.toStdString().empty())
             node["dataset_root"] = dataset_root_path_.toStdString().c_str();
-        }
+
 
 //        for (auto const &marker : markers_) {
 //            Node annotation;
@@ -928,100 +912,28 @@ namespace annotate {
     /*
      * added by oyjy
      */
-    void AnnotateDisplay::updateLabelNum() {
-//        auto const nums = label_num_property_->getString().split(',', QString::SkipEmptyParts);
-//        int i = 0;
-//        for (std::map<string, uint32_t>::iterator it = num_labels_.begin(); it != num_labels_.end(); ++it) {
-//            it->second = nums[i].trimmed().toUInt();
-//            i++;
-//        }
-//        qDebug()<<label_num_property_->getString()<<endl;
-        //防止加载config.rviz后显示数据被覆盖而与后台数据不一致
-        std::string joined_num;
-        for (auto const &it:num_labels_)
-            joined_num += joined_num.empty() ? to_string(it.second) : (", " + to_string(it.second));
-        label_num_property_->setStdString(joined_num);
-    }
-
-    void AnnotateDisplay::updateTagNum() {
-//        auto const nums = tag_num_property_->getString().split(',', QString::SkipEmptyParts);
-//        int i = 0;
-//        for (std::map<string, uint32_t>::iterator it = num_tags_.begin(); it != num_tags_.end(); ++it) {
-//            it->second = nums[i].trimmed().toUInt();
-//            i++;
-//        }
-//        qDebug()<<tag_num_property_->getString()<<endl;
-        //防止加载config.rviz后显示数据被覆盖而与后台数据不一致
-        std::string joined_num;
-        for (auto const &it:num_tags_)
-            joined_num += joined_num.empty() ? to_string(it.second) : (", " + to_string(it.second));
-        tag_num_property_->setStdString(joined_num);
-    }
-
     void AnnotateDisplay::updateRoot() {
 //        dataset_root_path_ = QString(root_property_->getStdString().c_str());
         root_property_->setStdString(dataset_root_path_.toStdString());
     }
 
-    void stringvector2qjsarray(vector<string> &vs, QJsonArray &js) {
-        QJsonArray tempjs;
-        for (auto const &it:vs) {
-            tempjs.append(it.c_str());
-        }
-        js = tempjs;
-    }
-
-    void qjsarray2stringvector(QJsonArray &js, vector<string> &vs) {
-        vector<string> tempvs;
-        for (auto const &it:js) {
-            tempvs.push_back(it.toString().toStdString().c_str());
-        }
-        vs = tempvs;
-    }
-
-    void shuffleJsArray(QString _split_file_path) {
-        QFile split_file;
-        if (split_file.exists(_split_file_path)) {
-            split_file.setFileName(_split_file_path);
-            split_file.open(QIODevice::ReadWrite);
-
-            QByteArray allData = split_file.readAll();
-            QJsonDocument jsonDoc(QJsonDocument::fromJson(allData));
-            QJsonArray content = jsonDoc.array();
-
-            //由于qjs未实现swap不能直接进行shuffle
-            vector<string> tempvs;
-            qDebug()<<content.size()<<endl;
-            qjsarray2stringvector(content, tempvs);
-            qDebug()<<tempvs.size()<<endl;
-            random_shuffle(tempvs.begin(), tempvs.end());
-            qDebug()<<tempvs.size()<<endl;
-            stringvector2qjsarray(tempvs, content);
-            qDebug()<<content.size()<<endl;
-            QJsonDocument shuffledoc(content);
-            allData = shuffledoc.toJson();
-            split_file.close();
-            split_file.open(QIODevice::ReadWrite | QIODevice::Truncate);
-            split_file.write(allData);
-            split_file.close();
-        }
-    }
-//    "shape_data/" + cate_dir + "/" + to_string(annotate_display_->num_labels_[label_]);
-
-    void AnnotateDisplay::updateShuffle() {
-        for (int i = 0; i < tags_.size(); ++i) {
-            QString split_file_path = split_dir_path_ + "/shuffled_" + tags_[i].c_str() + "_file_list.json";
-            shuffleJsArray(split_file_path);
-        }
-    }
-
-    void AnnotateDisplay::updateDefalutLabel() {
-        defalut_label_ = labels_[defalutLabelProperty_->getOptionInt()];
+    void AnnotateDisplay::updateDefaultLabel() {
+        default_label_ = labels_[defaultLabelProperty_->getOptionInt()];
 
     }
 
-    void AnnotateDisplay::updateDefalutTag() {
-        defalut_tag_ = tags_[defalutTagProperty_->getOptionInt()];
+    void AnnotateDisplay::updateDefaultTag() {
+        default_tag_ = tags_[defaultTagProperty_->getOptionInt()];
+    }
+
+    void AnnotateDisplay::updateDefaultSize() {
+        defaultBoxSize = defaultBoxSizeProperty->getVector();
+    }
+
+    void AnnotateDisplay::updateAll() {
+        updateTags();
+        updateLabels();
+        updateRoot();
     }
 }  // namespace annotate
 

@@ -4,7 +4,6 @@
 #include <pcl/common/common.h>
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
-#include <pcl_ros/point_cloud.h>
 #include <pcl_ros/transforms.h>
 #include <pcl/filters/crop_box.h>
 #include <visualization_msgs/MarkerArray.h>
@@ -15,7 +14,7 @@
 #include <QFile>
 #include <QDebug>
 #include <QDir>
-
+#include <python2.7/Python.h>
 
 using namespace visualization_msgs;
 using namespace interactive_markers;
@@ -188,6 +187,10 @@ namespace annotate {
         }
         menu_handler_.insert(edit_menu, "Shrink to Points", boost::bind(&AnnotationMarker::shrink, this, _1));
         menu_handler_.insert(edit_menu, "Auto-fit Box", boost::bind(&AnnotationMarker::autoFit, this, _1));
+        //新增如下
+        menu_handler_.insert(edit_menu, "Gen split shuffle",
+                             boost::bind(&AnnotationMarker::genSplitandShuffle, this, _1));
+
 
         string commit_title = "Commit";
         if (context.points_nearby) {
@@ -313,6 +316,13 @@ namespace annotate {
         createCubeControl();
         createMoveControl();
 
+        /*
+         *
+         */
+        Vector3 scale(annotate_display_->defaultBoxSize.x,
+                      annotate_display_->defaultBoxSize.y,
+                      annotate_display_->defaultBoxSize.z);
+        setBoxSize(scale);
     }
 
     void AnnotationMarker::updateDescription(const PointContext &context) {
@@ -665,17 +675,12 @@ namespace annotate {
     }
 
     void AnnotationMarker::commit() {
-        /*
-         *
-         */
         if (tags_.empty() || label_ == "unknown") {
             qDebug() << "请选择Label和Tag" << endl;
             return;
         }
-        qDebug() << tags_[0].c_str() << " " << label_.c_str() << endl;
-        /*
-         *
-         */
+        qDebug() << tags_[0].c_str() << " " << label_.c_str();
+
         pull();
         if (annotate_display_->shrinkBeforeCommit()) {
             auto const context = analyzePoints();
@@ -724,7 +729,7 @@ namespace annotate {
         for (auto pair:annotate_display_->num_labels_) {
             ss >> label >> cate_dir;
             if (label == label_) {
-                qDebug()<<label.c_str()<<endl;
+                qDebug() << "Dir : " << label.c_str() << endl;
                 break;
             }
         }
@@ -733,25 +738,8 @@ namespace annotate {
         //更新计数
         ++annotate_display_->num_labels_[label_];
         ++annotate_display_->num_tags_[type];
-        string joined_num;
-        for (auto const &it :annotate_display_->num_labels_) {
-            if (joined_num.empty()) {
-                joined_num = to_string(it.second);
-            } else {
-                joined_num += ", " + to_string(it.second);;
-            }
-        }
-        annotate_display_->label_num_property_->setStdString(joined_num);
-        joined_num.clear();
-        for (auto const &it :annotate_display_->num_tags_) {
-            if (joined_num.empty()) {
-                joined_num = to_string(it.second);
-            } else {
-                joined_num += ", " + to_string(it.second);;
-            }
-        }
-        annotate_display_->tag_num_property_->setStdString(joined_num);
-        annotate_display_->setCurrentCount(annotate_display_->num_labels_[label_]);
+        annotate_display_->updateAll();
+        //        annotate_display_->setCurrentCount(annotate_display_->num_labels_[label_]);
 
 
         //获取数据集文件路径
@@ -843,28 +831,6 @@ namespace annotate {
             msg_pub.header.frame_id = marker_.header.frame_id;
             annotate_display_->cloud_in_box_publisher_.publish(msg_pub);
         }
-
-
-
-        //创建 split 文件
-        QString split_file_path = annotate_display_->split_dir_path_
-                                  + "/shuffled_" + type.c_str() + "_file_list.json";
-
-
-        QFile jsfile(split_file_path);
-        QJsonArray exitData;
-        if (jsfile.open(QIODevice::ReadOnly)) {
-            QByteArray allData = jsfile.readAll();
-            QJsonDocument jsonDoc(QJsonDocument::fromJson(allData));
-            exitData = jsonDoc.array();
-            jsfile.close();
-        }
-        string appendData = "shape_data/" + cate_dir + "/" + to_string(annotate_display_->num_labels_[label_]);
-        exitData.append(appendData.c_str());
-        QJsonDocument doc(exitData);
-        WRITE_JSON_FILE(split_file_path, doc);
-
-
 
         /*
          * added by oyjy
@@ -1011,4 +977,17 @@ namespace annotate {
         ignore_ground_ = enabled;
     }
 
+    //新增
+    void AnnotationMarker::genSplitandShuffle(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback) {
+        if (!Py_IsInitialized()) {
+            cout << "py unInitialized" << endl;
+        } else {
+            stringstream cmd;
+            cmd << "execfile(" << "'" << ros::package::getPath("annotate") << "/scripts/generateSplitFile.py"
+                << "'," << "{'config_file_path':'" << annotate_display_->config_file_path_.c_str() << "'})";
+            cout<<"running python :"<<cmd.str()<<endl;
+            PyRun_SimpleString(cmd.str().c_str());
+            cout << "generated files " << endl;
+        }
+    }
 }  // namespace annotate
